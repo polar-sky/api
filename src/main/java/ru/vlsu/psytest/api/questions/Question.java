@@ -8,16 +8,14 @@ public class Question {
     @Id
     private Integer ID;
     private String text1;
-    private String text2;
     private String type;
 
 
     //конструктор
 
-    public Question(Integer ID, String text1, String text2, String type) {
+    public Question(Integer ID, String text1, String type) {
         this.ID = ID;
         this.text1 = text1;
-        this.text2 = text2;
         this.type = type;
     }
 
@@ -42,14 +40,6 @@ public class Question {
 
     public void setText1(String text1) {
         this.text1 = text1;
-    }
-
-    public String getText2() {
-        return text2;
-    }
-
-    public void setText2(String text2) {
-        this.text2 = text2;
     }
 
     public String getType() {

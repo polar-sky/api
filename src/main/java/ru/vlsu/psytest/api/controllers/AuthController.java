@@ -1,5 +1,6 @@
 package ru.vlsu.psytest.api.controllers;
 
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -8,6 +9,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import ru.vlsu.psytest.api.questions.Question;
 import ru.vlsu.psytest.api.users.*;
 import ru.vlsu.psytest.api.users.request.LoginRequest;
 import ru.vlsu.psytest.api.users.request.SignupRequest;
@@ -115,5 +117,11 @@ public class AuthController {
         userRepository.save(user);
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+    }
+
+    @GetMapping("/users")
+    @ApiOperation("Возвращает список всех челиков")
+    public List<User> list(){
+        return userRepository.findAll();
     }
 }
