@@ -19,6 +19,7 @@ import java.util.NoSuchElementException;
 
 //здесь обрабатываются запросы для restful web сервисов
 @RestController
+@RequestMapping("/api/testing")
 public class QuestionController {
 
     @Autowired
