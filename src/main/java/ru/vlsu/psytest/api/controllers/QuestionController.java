@@ -5,10 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.vlsu.psytest.api.questions.AttemptRequestId;
-import ru.vlsu.psytest.api.questions.AttemptResponse;
-import ru.vlsu.psytest.api.questions.Question;
-import ru.vlsu.psytest.api.questions.QuestionService;
+import ru.vlsu.psytest.api.questions.*;
 import ru.vlsu.psytest.api.users.User;
 import ru.vlsu.psytest.api.users.UserRepository;
 import ru.vlsu.psytest.api.users.response.MessageResponse;
@@ -69,10 +66,11 @@ public class QuestionController {
         service.delete(id);
     }
 
-    @GetMapping("/results/{IE}&{SN}&{TF}&{JP}")
+    @GetMapping("/results")
     @ApiOperation("Получает данные о пройденном тесте и возвращает результат прохождения теста")
-    public String results(@PathVariable Integer IE,@PathVariable Integer SN,@PathVariable Integer TF,@PathVariable Integer JP){
-      return service.getResult(IE,SN,TF,JP);
+    public ResponseEntity<ResultsResponse> results(@RequestParam Integer IE, @RequestParam Integer SN, @RequestParam Integer TF, @RequestParam Integer JP, @RequestParam Long id){
+     //return service.getResult(IE,SN,TF,JP,id).toString();
+        return ResponseEntity.ok(new ResultsResponse(service.getResult(IE,SN,TF,JP,id)));
     }
 
     @GetMapping("/attempts")

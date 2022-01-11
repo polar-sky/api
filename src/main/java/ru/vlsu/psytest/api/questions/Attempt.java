@@ -26,14 +26,13 @@ public class Attempt {
     @JsonManagedReference
     private User user;
 
-    @OneToMany (fetch = FetchType.LAZY,
+    @ManyToOne (fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
-    @JoinColumn(name = "attempt_id")
-    private List<Results> results;
+    @JoinColumn(name = "result_id")
+    private Results result;
 
     public Attempt() {
     }
-
 
     public long getId() {
         return id;
@@ -59,12 +58,12 @@ public class Attempt {
         this.user = user;
     }
 
-    public List<Results> getResults() {
-        return results;
+    public Results getResult() {
+        return result;
     }
 
-    public void setResults(List<Results> results) {
-        this.results = results;
+    public void setResult(Results result) {
+        this.result = result;
     }
 
     public Date getDate() {
