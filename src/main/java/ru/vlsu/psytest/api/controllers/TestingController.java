@@ -83,7 +83,7 @@ public class TestingController {
     }
 
     @GetMapping("/attempts")
-    @ApiOperation("Возвращает список всех popit ок пользователя. Результаты прилагаются, где это возможно")
+    @ApiOperation("Возвращает список всех попыток пользователя")
     public ResponseEntity<AttemptResponse>  attempts(Principal principal) {
         User user = userRepository.findByUsername(principal.getName()).get();
         return ResponseEntity.ok(new AttemptResponse(service.getUserAttempts(user)));

@@ -26,7 +26,7 @@ public class Attempt {
     @JsonManagedReference
     private User user;
 
-    @ManyToOne (fetch = FetchType.LAZY,
+    @ManyToOne (fetch = FetchType.EAGER,
             cascade = CascadeType.ALL)
     @JoinColumn(name = "result_id")
     private Results result;
