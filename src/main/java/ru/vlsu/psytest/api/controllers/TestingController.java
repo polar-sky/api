@@ -77,7 +77,7 @@ public class TestingController {
         if (service.getResult(IE,SN,TF,JP,id) == null) {
             return ResponseEntity
                     .badRequest()
-                    .body(new MessageResponse("Error: Conflict. Attempt is not finished"));
+                    .body(new MessageResponse("Error: Conflict"));
         }
         return ResponseEntity.ok(new ResultsResponse(service.getResult(IE,SN,TF,JP,id)));
     }
@@ -98,7 +98,7 @@ public class TestingController {
         else
             return ResponseEntity
                     .badRequest()
-                    .body(new MessageResponse("Error: Something went wrong("));
+                    .body(new MessageResponse("Error"));
     }
 
     @PostMapping("/finishAttempt")
@@ -111,7 +111,7 @@ public class TestingController {
         else
             return ResponseEntity
                     .badRequest()
-                    .body(new MessageResponse("Error: Not all questions have answers( or maybe you have no attempt to finish"));
+                    .body(new MessageResponse("Error"));
     }
 
     @GetMapping("/statistic")
@@ -119,7 +119,7 @@ public class TestingController {
     public HashMap<String, Integer> getStatistic(){
 
         Integer finished = attemptRepository.getAllFinishedAttempts().size();
-        Integer notfinished = attemptRepository.getAllFinishedAttempts().size();
+        Integer notfinished = attemptRepository.getAllNotFinishedAttempts().size();
 
         HashMap<String, Integer> stats = new HashMap<>();
         stats.put("finished", finished);
@@ -128,7 +128,7 @@ public class TestingController {
     }
 
     @GetMapping("/details")
-    @ApiOperation("Инфа о аккаунте!")
+    @ApiOperation("Информация об аккаунте")
     public ResponseEntity<UserResponse> userDetails(Principal principal) {
         User user = userRepository.findByUsername(principal.getName()).get();
         return ResponseEntity.ok(service.getDetails(user));
