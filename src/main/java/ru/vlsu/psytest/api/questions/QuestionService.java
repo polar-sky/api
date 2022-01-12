@@ -6,12 +6,11 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.vlsu.psytest.api.questions.Question;
 import ru.vlsu.psytest.api.questions.QuestionRepository;
 import ru.vlsu.psytest.api.users.User;
+import ru.vlsu.psytest.api.users.UserResponse;
 
 import java.sql.Date;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class QuestionService {
@@ -122,5 +121,12 @@ public class QuestionService {
 
     public List<Attempt> getUserAttempts(User user)  {
         return attemptRepository.getAllUserAttempts(user.getId());
+    }
+
+    public UserResponse getDetails(User user){
+        UserResponse userResponse = new UserResponse();
+        userResponse.setUsername(user.getUsername());
+        userResponse.setEmail(user.getEmail());
+        return userResponse;
     }
 }

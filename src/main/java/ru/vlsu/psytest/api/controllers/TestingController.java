@@ -8,21 +8,25 @@ import org.springframework.web.bind.annotation.*;
 import ru.vlsu.psytest.api.questions.*;
 import ru.vlsu.psytest.api.users.User;
 import ru.vlsu.psytest.api.users.UserRepository;
+import ru.vlsu.psytest.api.users.UserResponse;
 import ru.vlsu.psytest.api.users.response.MessageResponse;
 
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
 import java.util.NoSuchElementException;
 
 //здесь обрабатываются запросы для restful web сервисов
 @RestController
 @RequestMapping("/api/testing")
-public class QuestionController {
+public class TestingController {
 
     @Autowired
     private QuestionService service;
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    AttemptRepository attemptRepository;
 
     @GetMapping("/questions")
     @ApiOperation("Возвращает список всех вопросов")
@@ -90,7 +94,7 @@ public class QuestionController {
     public ResponseEntity<MessageResponse>  startAttempt(Principal principal) {
         User user = userRepository.findByUsername(principal.getName()).get();
         if(service.startTest(user))
-            return ResponseEntity.ok(new MessageResponse("Test started!"));
+            return ResponseEntity.ok(new MessageResponse("Попытка успешно создана"));
         else
             return ResponseEntity
                     .badRequest()
@@ -108,5 +112,25 @@ public class QuestionController {
             return ResponseEntity
                     .badRequest()
                     .body(new MessageResponse("Error: Not all questions have answers( or maybe you have no attempt to finish"));
+    }
+
+    @GetMapping("/statistic")
+    @ApiOperation("Возвращает статистику")
+    public HashMap<String, Integer> getStatistic(){
+
+        Integer finished = attemptRepository.getAllFinishedAttempts().size();
+        Integer notfinished = attemptRepository.getAllFinishedAttempts().size();
+
+        HashMap<String, Integer> stats = new HashMap<>();
+        stats.put("finished", finished);
+        stats.put("notfinished", notfinished);
+        return stats;
+    }
+
+    @GetMapping("/details")
+    @ApiOperation("Инфа о аккаунте!")
+    public ResponseEntity<UserResponse> userDetails(Principal principal) {
+        User user = userRepository.findByUsername(principal.getName()).get();
+        return ResponseEntity.ok(service.getDetails(user));
     }
 }

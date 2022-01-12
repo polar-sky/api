@@ -12,4 +12,10 @@ public interface AttemptRepository extends JpaRepository<Attempt,Long> {
 
     @Query("select a from Attempt a where a.user.id=:id")
     List<Attempt> getAllUserAttempts(@Param("id") long id);
+
+    @Query("select a from Attempt a where a.finished=false")
+    List<Attempt> getAllNotFinishedAttempts();
+
+    @Query("select a from Attempt a where a.finished=true")
+    List<Attempt> getAllFinishedAttempts();
 }
