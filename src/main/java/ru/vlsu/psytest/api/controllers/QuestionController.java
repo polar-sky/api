@@ -68,8 +68,14 @@ public class QuestionController {
 
     @GetMapping("/results")
     @ApiOperation("Получает данные о пройденном тесте и возвращает результат прохождения теста")
-    public ResponseEntity<ResultsResponse> results(@RequestParam Integer IE, @RequestParam Integer SN, @RequestParam Integer TF, @RequestParam Integer JP, @RequestParam Long id){
+    public ResponseEntity<?> results(@RequestParam Integer IE, @RequestParam Integer SN, @RequestParam Integer TF, @RequestParam Integer JP, @RequestParam Long id){
      //return service.getResult(IE,SN,TF,JP,id).toString();
+        if (service.getResult(IE,SN,TF,JP,id) == null) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Error: Conflict. Attempt is not finished"));
+                    //ResponseEntity<ResultsResponse>(HttpStatus.CONFLICT);
+        }
         return ResponseEntity.ok(new ResultsResponse(service.getResult(IE,SN,TF,JP,id)));
     }
 

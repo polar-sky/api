@@ -44,47 +44,52 @@ public class QuestionService {
     public Results getResult(Integer IE, Integer SN, Integer TF, Integer JP, Long id){
 
         Attempt attempt = attemptRepository.getById(id);
-        Results result;
+        if ((attempt.isFinished())&&(attempt.getResult() == null)) {
+            Results result;
 
-        // инициализируем перменные под черты характера
-        String introvertOrExtrovert;
-        String sensorOrIntuitive;
-        String thinkerOrFeeler;
-        String judgerOrPerceiver;
+            // инициализируем перменные под черты характера
+            String introvertOrExtrovert;
+            String sensorOrIntuitive;
+            String thinkerOrFeeler;
+            String judgerOrPerceiver;
 
-        // Main algorithm. Stores the user's Test answers as corresponding Myers-Briggs letters.
-        if (IE <= 20){
-            introvertOrExtrovert = "E";
-        }else{
-            introvertOrExtrovert = "I";
+            // Main algorithm. Stores the user's Test answers as corresponding Myers-Briggs letters.
+            if (IE <= 20) {
+                introvertOrExtrovert = "E";
+            } else {
+                introvertOrExtrovert = "I";
+            }
+
+            if (SN <= 20) {
+                sensorOrIntuitive = "S";
+            } else {
+                sensorOrIntuitive = "N";
+            }
+
+            if (TF <= 20) {
+                thinkerOrFeeler = "T";
+            } else {
+                thinkerOrFeeler = "F";
+            }
+
+            if (JP <= 20) {
+                judgerOrPerceiver = "J";
+            } else {
+                judgerOrPerceiver = "P";
+            }
+
+            // конкатенируем строчку результата:
+            String res = introvertOrExtrovert + sensorOrIntuitive + thinkerOrFeeler + judgerOrPerceiver;
+
+            result = resultsRepository.findByType(res);
+            attempt.setResult(result);
+            attemptRepository.save(attempt);
+
+            return result;
         }
-
-        if( SN <= 20){
-            sensorOrIntuitive = "S";
-        }else{
-            sensorOrIntuitive = "N";
+        else {
+            return null;
         }
-
-        if(TF <= 20){
-            thinkerOrFeeler = "T";
-        }else{
-            thinkerOrFeeler = "F";
-        }
-
-        if(JP <= 20){
-            judgerOrPerceiver = "J";
-        }else{
-            judgerOrPerceiver = "P";
-        }
-
-        // конкатенируем строчку результата:
-        String res = introvertOrExtrovert + sensorOrIntuitive + thinkerOrFeeler + judgerOrPerceiver;
-
-        result = resultsRepository.findByType(res);
-        attempt.setResult(result);
-        attemptRepository.save(attempt);
-
-        return result;
     }
 
     @Transactional
