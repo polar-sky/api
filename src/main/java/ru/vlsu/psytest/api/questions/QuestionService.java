@@ -44,7 +44,7 @@ public class QuestionService {
     public Results getResult(Integer IE, Integer SN, Integer TF, Integer JP, Long id){
 
         Attempt attempt = attemptRepository.getById(id);
-        if ((attempt.isFinished())&&(attempt.getResult() == null)) {
+        if (attempt.isFinished()) {
             Results result;
 
             // инициализируем перменные под черты характера
