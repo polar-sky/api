@@ -58,7 +58,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors().and().csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .authorizeRequests().antMatchers("/api/auth/**", "/api/testing/questions", "/api/testing/someQuestions","/api/testing/statistic",
+                .authorizeRequests().antMatchers("/api/auth/**", "/api/testing/questions", "/api/testing/someQuestions",
                 "/swagger-ui/**",
                 "/v2/api-docs",
                 "/swagger-resources",
@@ -69,8 +69,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 "/webjars/**","/v3/api-docs/**",
                 "/swagger-ui/**").permitAll()
                 .antMatchers("/api/testing/startAttempt","/api/testing/attempts", "/api/testing/finishAttempt", "/api/testing/**").hasRole("USER")
-                .antMatchers("/api/testing/startAttempt","/api/testing/attempts", "/api/testing/finishAttempt", "/api/testing/results", "/api/testing/**").hasRole("USER")
-                .antMatchers("/**").hasRole("admin")
+                .antMatchers("/api/testing/startAttempt","/api/testing/attempts", "/api/testing/finishAttempt", "/api/testing/results", "/api/testing/statistic", "/api/testing/**").hasRole("MODERATOR")
+                .antMatchers("/**").hasRole("ADMIN")
                 .anyRequest().authenticated();
 
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
