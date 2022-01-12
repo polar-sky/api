@@ -68,7 +68,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 "/swagger-ui.html",
                 "/webjars/**","/v3/api-docs/**",
                 "/swagger-ui/**").permitAll()
-                .antMatchers("/api/testing/startAttempt", "/api/testing/finishAttempt", "/api/testing/details", "/api/testing/attempts", "/api/testing/**").hasRole("USER")
+                .antMatchers("/api/testing/startAttempt", "/api/testing/finishAttempt", "/api/testing/details", "/api/testing/attempts", "/api/testing/results").hasRole("USER")
                 .antMatchers( "/api/testing/statistic").hasRole("MODERATOR")
                 .antMatchers("/**").hasRole("admin")
                 .anyRequest().authenticated();
