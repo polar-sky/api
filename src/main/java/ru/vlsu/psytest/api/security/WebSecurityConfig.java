@@ -58,7 +58,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors().and().csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .authorizeRequests().antMatchers("/api/auth/**", "/api/testing/questions", "/api/testing/someQuestions","/api/testing/answers",
+                .authorizeRequests().antMatchers("/api/auth/**", "/api/testing/questions", "/api/testing/someQuestions","/api/testing/answers", "/api/testing/results",
                 "/swagger-ui/**",
                 "/v2/api-docs",
                 "/swagger-resources",
@@ -68,7 +68,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 "/swagger-ui.html",
                 "/webjars/**","/v3/api-docs/**",
                 "/swagger-ui/**").permitAll()
-                .antMatchers("/api/testing/startAttempt","/api/testing/attempts", "/api/testing/giveAnswer", "/api/testing/finishAttempt", "/api/testing/results", "/testing/account/**", "/api/testing/**").hasRole("USER")
+                .antMatchers("/api/testing/startAttempt","/api/testing/attempts", "/api/testing/finishAttempt", "/testing/account/**", "/api/testing/**").hasRole("USER")
                 .antMatchers("/**").hasRole("admin")
                 .anyRequest().authenticated();
 
