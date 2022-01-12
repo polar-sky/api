@@ -82,6 +82,7 @@ public class QuestionService {
 
         result = resultsRepository.findByType(res);
         attempt.setResult(result);
+        attemptRepository.save(attempt);
 
         return result;
     }
