@@ -74,7 +74,6 @@ public class QuestionController {
             return ResponseEntity
                     .badRequest()
                     .body(new MessageResponse("Error: Conflict. Attempt is not finished"));
-                    //ResponseEntity<ResultsResponse>(HttpStatus.CONFLICT);
         }
         return ResponseEntity.ok(new ResultsResponse(service.getResult(IE,SN,TF,JP,id)));
     }
